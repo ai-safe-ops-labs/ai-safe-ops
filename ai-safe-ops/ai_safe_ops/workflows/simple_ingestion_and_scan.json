@@ -1,0 +1,106 @@
+{
+    "name": "simple_ingestion_and_scan",
+    "steps": [
+        {
+            "name": "ingest_codebase",
+            "type": "ingest",
+            "module": "ai_safe_ops.steps.ingest.ingest_codebase",
+            "function": "ingest_codebase",
+            "inputs": {
+                "path": "{workflow.inputs.path}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.gitingest_file}"
+            }
+        },
+        {
+            "name": "scan_tech_stack",
+            "type": "scan",
+            "module": "ai_safe_ops.steps.scan.scan_tech_stack",
+            "function": "scan_tech_stack",
+            "inputs": {
+                "gitingest_file_path": "{steps.ingest_codebase.outputs.output_file}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.tech_stack_file}"
+            }
+        },
+        {
+            "name": "scan_secrets",
+            "type": "scan",
+            "module": "ai_safe_ops.steps.scan.scan_secrets",
+            "function": "scan_secrets",
+            "inputs": {
+                "gitingest_file_path": "{steps.ingest_codebase.outputs.output_file}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.secrets_file}"
+            }
+        },
+        {
+            "name": "find_pyproject",
+            "type": "scan",
+            "module": "ai_safe_ops.steps.scan.find_pyproject",
+            "function": "find_pyproject",
+            "inputs": {
+                "codebase_path": "{workflow.inputs.path}",
+                "gitingest_file_path": "{steps.ingest_codebase.outputs.output_file}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.pyproject_file_path}"
+            }
+        },
+        {
+            "name": "scan_dependencies",
+            "type": "analyze",
+            "module": "ai_safe_ops.steps.scan.scan_dependencies",
+            "function": "scan_dependencies",
+            "inputs": {
+                "dependency_file_path": "{steps.find_pyproject.outputs.output_file}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.dependencies_file}"
+            }
+        },
+        {
+            "name": "scan_static_code",
+            "type": "analyze",
+            "module": "ai_safe_ops.steps.analyze.scan_static_code",
+            "function": "scan_static_code",
+            "inputs": {
+                "codebase_path": "{workflow.inputs.path}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.static_code_analysis_file}"
+            }
+        },
+        {
+            "name": "scan_documentation",
+            "type": "scan",
+            "module": "ai_safe_ops.steps.scan.scan_documentation",
+            "function": "scan_documentation",
+            "inputs": {
+                "codebase_path": "{workflow.inputs.path}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.documentation_file}"
+            }
+        },
+        {
+            "name": "generate_report",
+            "type": "report",
+            "module": "ai_safe_ops.steps.report.generate_report",
+            "function": "generate_report",
+            "inputs": {
+                "documentation_file": "{steps.scan_documentation.outputs.output_file}",
+                "secrets_file": "{steps.scan_secrets.outputs.output_file}",
+                "dependencies_file": "{steps.scan_dependencies.outputs.output_file}",
+                "static_code_analysis_file": "{steps.scan_static_code.outputs.output_file}",
+                "log_dir": "{workflow.log_dir}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.report_file}"
+            }
+        }
+    ]
+}
