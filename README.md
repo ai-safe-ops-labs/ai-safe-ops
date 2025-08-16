@@ -38,6 +38,7 @@ AI agent frameworks (Google ADK, LangChain, CrewAI) provide incredible power, bu
 
 Our toolkit is built around the four established phases of risk management, applied to the specific domains of AI agents.
 
+```mermaid
 graph TD
     subgraph " "
         subgraph Risk Domains
@@ -66,6 +67,7 @@ graph TD
 
     class D1,D2,D3,D4 domains;
     class A,B,C,D cycle;
+```
 
 1.  **Identify & Analyze:** Proactively uncover risks in your codebase, configuration, and documentation.
 2.  **Assess & Score:** Evaluate the severity of identified risks to prioritize action.
