@@ -10,6 +10,20 @@
 
 **Mission:** We are building an open-source framework that acts as the "AI Framework for the boring, but important topics." It helps developers automatically audit their agentic systems and prepare them for regulations like the EU AI Act.
 
+### Target Audience
+AI Engineers developing AI agent systems with frameworks like: 
+- [langchain](https://github.com/langchain-ai/langchain) & [langgraph](https://github.com/langchain-ai/langgraph)
+- [Google Agent Development Kit](https://github.com/google/adk-python)
+- [crewAI](https://github.com/crewAIInc/crewAI)
+- [agno](https://github.com/agno-agi/agno)
+
+seeking for a solution covering all "boring" topics like: 
+- Governance
+- Security
+- Guardrails
+- Compliance
+- Regulation
+
 ## 📜 Core Philosophy: Deterministic First, AI Second
 
 Our central principle is to provide a foundation of trust and reliability.
@@ -37,9 +51,9 @@ This engine analyzes your agent's codebase *before* it runs. It operates in two 
     *   **Use Case:** Generate a compliance report for the EU AI Act by having an AI agent analyze your code and documentation against the official requirements.
     *   **Command:** `ai-safe-ops audit --policy ./policies/eu-ai-act.yml ./my-agent-project`
 
-### 3. 🛡️ The Guardrails (Runtime Protection)
+### 3. 🛡️ The Guardrails Engine (Runtime Protection)
 
-This is a lightweight Python library (`ai_safe_ops.guardrails`) that you import directly into your agent's code. It acts like an airbag or ABS system, actively preventing harmful behavior in real-time.
+Easily implement guardrails directly into your agent's code. It acts like an airbag or ABS system, actively preventing harmful behavior in real-time.
 
 *   **Use Case:** Prevent your agent from processing prompts containing Personal Identifiable Information (PII) or from generating responses that mention a competitor's name.
 *   **Integration:** Designed to be easily plugged into the callback systems of modern agent frameworks (e.g., Google ADK's `before_model_callback`).
