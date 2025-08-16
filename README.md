@@ -1,5 +1,7 @@
 # AI Safe Ops 360 - Project Charter (Internal)
 
+![AI Safe Ops In Action](docs/assets/ai-safe-ops.gif)
+
 ## 1. Vision & Mission
 
 **Vision:** To become the standard toolkit for AI developers, making governance, security, and compliance simple, fast, and accessible.
