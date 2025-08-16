@@ -53,10 +53,10 @@ Our development is structured in phases, moving from a solid, deterministic foun
 
 **Goal:** Move beyond pure security to provide deeper governance checks related to data handling, configuration, and ethical heuristics.
 
-*   [ ] **Analyze:** `scan_data_handling` (Use regex to identify potential logging of PII or sensitive information).
-*   [ ] **Analyze:** `scan_config_files` (Check `.yaml`/`.json` files for common misconfigurations or missing security settings).
-*   [ ] **Analyze:** `check_bias_heuristics` (Use NLP libraries like `spaCy` to scan comments and variable names for potentially biased or problematic language).
-*   [ ] **Classify:** Implement a basic risk classification step based on the findings from Phase 1 and 2.
+*   [x] **Analyze:** `scan_data_handling` (Use regex to identify potential logging of PII or sensitive information).
+*   [x] **Analyze:** `scan_config_files` (Check `.yaml`/`.json` files for common misconfigurations or missing security settings).
+*   [x] **Analyze:** `check_bias_heuristics` (Use NLP libraries like `spaCy` to scan comments and variable names for potentially biased or problematic language).
+*   [x] **Classify:** Implement a basic risk classification step based on the findings from Phase 1 and 2.
 
 ### Phase 3: Advanced MLOps & Compliance Integration
 

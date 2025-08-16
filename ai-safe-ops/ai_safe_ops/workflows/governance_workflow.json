@@ -1,0 +1,83 @@
+{
+    "name": "governance_workflow",
+    "steps": [
+        {
+            "name": "ingest_codebase",
+            "type": "ingest",
+            "module": "ai_safe_ops.steps.ingest.ingest_codebase",
+            "function": "ingest_codebase",
+            "inputs": {
+                "path": "{workflow.inputs.path}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.gitingest_file}"
+            }
+        },
+        {
+            "name": "scan_data_handling",
+            "type": "analyze",
+            "module": "ai_safe_ops.steps.analyze.scan_data_handling",
+            "function": "scan_data_handling",
+            "inputs": {
+                "gitingest_file_path": "{steps.ingest_codebase.outputs.output_file}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.data_handling_file}"
+            }
+        },
+        {
+            "name": "scan_config_files",
+            "type": "analyze",
+            "module": "ai_safe_ops.steps.analyze.scan_config_files",
+            "function": "scan_config_files",
+            "inputs": {
+                "gitingest_file_path": "{steps.ingest_codebase.outputs.output_file}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.config_files_file}"
+            }
+        },
+        {
+            "name": "check_bias_heuristics",
+            "type": "analyze",
+            "module": "ai_safe_ops.steps.analyze.check_bias_heuristics",
+            "function": "check_bias_heuristics",
+            "inputs": {
+                "gitingest_file_path": "{steps.ingest_codebase.outputs.output_file}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.bias_heuristics_file}"
+            }
+        },
+        {
+            "name": "classify_risks",
+            "type": "classify",
+            "module": "ai_safe_ops.steps.classify.classify_risks",
+            "function": "classify_risks",
+            "inputs": {
+                "analysis_files": [
+                    "{steps.scan_data_handling.outputs.output_file}",
+                    "{steps.scan_config_files.outputs.output_file}",
+                    "{steps.check_bias_heuristics.outputs.output_file}"
+                ]
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.classified_risks_file}"
+            }
+        },
+        {
+            "name": "generate_governance_report",
+            "type": "report",
+            "module": "ai_safe_ops.steps.report.generate_governance_report",
+            "function": "generate_governance_report",
+            "inputs": {
+                "classified_risks_file": "{steps.classify_risks.outputs.output_file}",
+                "log_dir": "{workflow.log_dir}",
+                "executed_steps": "{workflow.all_steps}"
+            },
+            "outputs": {
+                "output_file": "{workflow.outputs.report_file}"
+            }
+        }
+    ]
+}

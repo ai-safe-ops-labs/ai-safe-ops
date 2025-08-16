@@ -13,6 +13,8 @@ setup(
         "pip-audit",
         "detect-secrets",
         "bandit",
+        "pyyaml",
+        "spacy",
     ],
     author="AI SafeOps Labs",
     description="A modular framework for analyzing, classifying, and certifying AI codebases."

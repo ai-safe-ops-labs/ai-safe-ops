@@ -49,6 +49,8 @@ def run_workflow(workflow_file: str, workflow_inputs: dict, enable_local_logs: b
                 # --- KORREKTUR HIER ---
                 elif value == "{workflow.log_dir}":
                     inputs[key] = log_dir
+                elif value == "{workflow.all_steps}":
+                    inputs[key] = all_step_names
                 elif isinstance(value, str) and value.startswith("{steps."):
                     parts = value.replace("{steps.", "").replace("}", "").split(".outputs.")
                     step_name = parts[0]
